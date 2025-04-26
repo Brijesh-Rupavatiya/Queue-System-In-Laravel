@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 @section('content')
 <div class="container">
     <h2>Register With Queue</h2>
@@ -10,4 +10,4 @@
         <button type="submit">Register</button>
     </form>
 </div>
-@endsection
+@endsection --}}

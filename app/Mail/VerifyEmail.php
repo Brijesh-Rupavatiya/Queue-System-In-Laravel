@@ -131,14 +131,51 @@
 
 
 
+
+
+// namespace App\Mail;
+
+// use Illuminate\Mail\Mailable;
+// use Illuminate\Support\Facades\URL;
+// use Illuminate\Support\Carbon;
+
+// class VerifyEmail extends Mailable
+// {
+//     public $user;
+
+//     public function __construct($user)
+//     {
+//         $this->user = $user;
+//     }
+
+//     public function build()
+//     {
+//         $url = URL::temporarySignedRoute(
+//             'custom.verification.verify',
+//             now()->addMinutes(60),
+//             ['id' => $this->user->id, 'hash' => sha1($this->user->getEmailForVerification())]
+//         );
+
+//         return $this->subject('Verify Your Email')
+//                     ->view('emails.verify')
+//                     ->with(['url' => $url]);
+//     }
+// }
+
+
+
+
 namespace App\Mail;
 
+use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Carbon;
 
 class VerifyEmail extends Mailable
 {
+    use Queueable, SerializesModels;
+
     public $user;
 
     public function __construct($user)
@@ -149,12 +186,13 @@ class VerifyEmail extends Mailable
     public function build()
     {
         $url = URL::temporarySignedRoute(
-            'verification.verify', // The route name
-            now()->addMinutes(60),  // The expiration time
-            ['id' => $this->user->getKey(), 'hash' => sha1($this->user->getEmailForVerification())]
+            'custom.verification.verify',  // ✅ Important: custom.verification.verify route
+            now()->addMinutes(60),
+            ['id' => $this->user->id, 'hash' => sha1($this->user->getEmailForVerification())]
         );
 
-        return $this->subject('Verify Your Email Address')
-                    ->view('emails.verify', ['url' => $url]);
+        return $this->subject('Verify Your Email')
+                    ->view('emails.verify')
+                    ->with(['url' => $url]);
     }
 }
