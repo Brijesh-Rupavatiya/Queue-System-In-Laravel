@@ -10,6 +10,7 @@ use App\Jobs\SendVerificationEmail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Events\Registered;
 
@@ -42,9 +43,16 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // event(new Registered($user));
-        SendVerificationEmail::dispatch($user);
+        // Send email verification either through queue or not
+        if ($request->has('queue')) {
+            SendVerificationEmail::dispatch($user); // Queue email
+        } else {
+            // Send verification immediately (without queue)
+            Mail::to($user->email)->send(new \App\Mail\VerifyEmail($user));
+        }
 
+        // Event for registration
+        event(new Registered($user));
 
         Auth::login($user);
 
