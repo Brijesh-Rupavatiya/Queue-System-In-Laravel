@@ -15,6 +15,15 @@
                         <p class="text-sm">Track completed and pending jobs</p>
                     </div>
                 </div>
+                 <form action="{{ route('bulk.email.send.without.queue') }}" method="POST" style="margin-bottom: 10px;">
+                    @csrf
+                    <button type="submit">Send Bulk Email Without Queue</button>
+                </form>
+
+                <form action="{{ route('bulk.email.send.with.queue') }}" method="POST">
+                    @csrf
+                    <button type="submit">Send Bulk Email With Queue</button>
+                </form>
             </div>
         </div>
     </div>
