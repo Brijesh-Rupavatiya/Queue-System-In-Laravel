@@ -34,6 +34,9 @@ class RegisterController extends Controller
         // Send Verification Mail without Queue
         Mail::to($user->email)->send(new VerifyEmail($user));
 
+        // $user->sendEmailVerificationNotification();
+
+
         return redirect()->route('login')->with('message', 'Please check your email for verification.');
     }
 }

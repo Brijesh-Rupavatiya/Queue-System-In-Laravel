@@ -16,7 +16,11 @@ Route::get('/dashboard', function () {
 
 // Bulk Email Routes
 Route::post('/send-bulk-email-without-queue', [BulkEmailController::class, 'sendWithoutQueue'])->name('bulk.email.send.without.queue');
-Route::post('/send-bulk-email-with-queue', [BulkEmailController::class, 'sendWithQueue'])->name('bulk.email.send.with.queue');
+// Route::post('/send-bulk-email-with-queue', [BulkEmailController::class, 'sendWithQueue'])->name('bulk.email.send.with.queue');
+Route::post('/send-bulk-email-with-queue', [BulkEmailController::class, 'sendWithQueue'])->name('bulk.send.with.queue');
+// Show bulk email form for both options
+Route::get('/bulk-email-form/{type}', [BulkEmailController::class, 'showForm'])->name('bulk.email.form');
+
 
 // Profile related routes
 Route::middleware('auth')->group(function () {

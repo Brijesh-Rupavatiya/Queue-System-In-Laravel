@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Jobs\SendWelcomeEmailJob;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Auth\Events\Verified;
-use App\Models\User;
 
 class CustomVerifyEmailController extends Controller
 {
@@ -27,8 +28,11 @@ class CustomVerifyEmailController extends Controller
         // Mark email as verified
         $user->markEmailAsVerified();
 
-        // You can fire Verified event if you want (optional)
+        //Fire Verified event
         event(new Verified($user));
+
+        // Queue Welcome Email after 2 mins
+        SendWelcomeEmailJob::dispatch($user)->delay(now()->addMinutes(2));
 
         return redirect('/login')->with('status', 'Email verified successfully.');
     }
