@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BulkEmailController;
 use App\Http\Controllers\CustomVerifyEmailController;
 use App\Http\Controllers\WithQueue\RegisterController as WithQueueController;
 use App\Http\Controllers\WithoutQueue\RegisterController as WithoutQueueController;
@@ -12,6 +13,14 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Bulk Email Routes
+Route::post('/send-bulk-email-without-queue', [BulkEmailController::class, 'sendWithoutQueue'])->name('bulk.email.send.without.queue');
+// Route::post('/send-bulk-email-with-queue', [BulkEmailController::class, 'sendWithQueue'])->name('bulk.email.send.with.queue');
+Route::post('/send-bulk-email-with-queue', [BulkEmailController::class, 'sendWithQueue'])->name('bulk.send.with.queue');
+// Show bulk email form for both options
+Route::get('/bulk-email-form/{type}', [BulkEmailController::class, 'showForm'])->name('bulk.email.form');
+
 
 // Profile related routes
 Route::middleware('auth')->group(function () {
