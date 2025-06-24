@@ -14,40 +14,22 @@
             </div>
         @endif
 
-        {{-- <form method="POST" action="{{ route('register.choice.submit') }}">
-            @csrf
-
-            <div class="mb-4">
-                <label class="block text-gray-700 font-semibold mb-1" for="name">Name</label>
-                <input type="text" name="name" id="name" required class="w-full px-4 py-2 border rounded-lg">
-            </div>
-
-            <div class="mb-4">
-                <label class="block text-gray-700 font-semibold mb-1" for="email">Email</label>
-                <input type="email" name="email" id="email" required class="w-full px-4 py-2 border rounded-lg">
-            </div>
-
-            <div class="mb-4">
-                <label class="block text-gray-700 font-semibold mb-1" for="password">Password</label>
-                <input type="password" name="password" id="password" required class="w-full px-4 py-2 border rounded-lg">
-            </div>
-
-            <div class="mb-6">
-                <label class="block text-gray-700 font-semibold mb-1" for="password_confirmation">Confirm Password</label>
-                <input type="password" name="password_confirmation" id="password_confirmation" required class="w-full px-4 py-2 border rounded-lg">
-            </div>
-
-            <div class="flex justify-between">
-                <button type="submit" name="action" value="with_queue" class="bg-indigo-600 text-white px-5 py-2 rounded-lg">Register With Queue</button>
-                <button type="submit" name="action" value="without_queue" class="bg-gray-600 text-white px-5 py-2 rounded-lg">Register Without Queue</button>
-            </div>
-        </form> --}}
         <form action="{{ route('register.choice.submit') }}" method="POST">
             @csrf
             <!-- inputs here -->
-            <button type="submit" name="action" value="with_queue">Register with Queue</button>
-            <button type="submit" name="action" value="without_queue">Register without Queue</button>
+            <div class="flex flex-col gap-4 mt-6">
+                <button type="submit" name="action" value="with_queue"
+                    class="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg font-semibold shadow hover:bg-indigo-700 transition duration-200 text-lg">
+                    Register with Queue
+                </button>
+                <button type="submit" name="action" value="without_queue"
+                    class="w-full bg-gray-100 text-indigo-700 border border-indigo-600 py-2 px-4 rounded-lg font-semibold shadow hover:bg-indigo-50 transition duration-200 text-lg">
+                    Register without Queue
+                </button>
+            </div>
         </form>
-
+        <a href="{{ url('/') }}" class="block text-center mt-6 text-indigo-600 hover:underline font-semibold">
+            &larr; Back to Home
+        </a>
     </div>
 </x-guest-layout>
