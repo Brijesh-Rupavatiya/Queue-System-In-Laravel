@@ -50,4 +50,7 @@
             </x-primary-button>
         </div>
     </form>
+    <a href="{{ route('register') }}" class="block text-center mt-4 text-indigo-600 hover:underline font-semibold">
+        &larr; Back to Register
+    </a>
 </x-guest-layout>

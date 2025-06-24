@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OtpController;
 use App\Http\Controllers\BulkEmailController;
 use App\Http\Controllers\CustomVerifyEmailController;
 use App\Http\Controllers\WithQueue\RegisterController as WithQueueController;
@@ -13,6 +14,11 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+Route::get('/verify-otp', [OtpController::class, 'showForm'])->name('otp.verify.form');
+Route::post('/verify-otp', [OtpController::class, 'verify'])->name('otp.verify');
+
 
 // Bulk Email Routes
 Route::post('/send-bulk-email-without-queue', [BulkEmailController::class, 'sendWithoutQueue'])->name('bulk.email.send.without.queue');
@@ -51,4 +57,4 @@ Route::get('/custom-verify/{id}/{hash}', [CustomVerifyEmailController::class, 'v
     ->name('custom.verification.verify');
 
 // Finally: Load Laravel Breeze's auth routes
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
