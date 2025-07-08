@@ -22,7 +22,7 @@ class OtpController extends Controller
 
         if ($otpRow && $otpRow->otp == $request->otp && now()->lt($otpRow->expires_at)) {
             Auth::loginUsingId($userId);
-            // Optionally delete OTP after use
+            //Delete OTP after use
             DB::table('user_otps')->where('user_id', $userId)->delete();
             session()->forget('otp_user_id');
             return redirect()->route('dashboard');
